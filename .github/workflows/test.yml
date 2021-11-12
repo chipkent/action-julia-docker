@@ -12,7 +12,6 @@ jobs:
       - name: Get branch name
         id: branch-name
         uses: tj-actions/branch-names@v5
-
       - name: Build and publish Julia application Docker image
         uses: chipkent/action-julia-docker@${{ steps.branch-name.outputs.current_branch }}
         with:
@@ -22,8 +21,8 @@ jobs:
           julia-package: GoogleSheets.jl
           julia-branch: main
           # ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - uses: chipkent/action-cleanup-package@v1.0.1
-        with:
-          package-name: action-julia-docker-test
-          tag: latest
-          github-token: ${{ secrets.CI_ACTION_TOKEN }}
+      # - uses: chipkent/action-cleanup-package@v1.0.1
+      #   with:
+      #     package-name: action-julia-docker-test
+      #     tag: latest
+      #     github-token: ${{ secrets.CI_ACTION_TOKEN }}
