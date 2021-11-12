@@ -1,0 +1,25 @@
+# Test the action to see if it works
+
+name: Test action
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+    steps:
+      - name: Build and publish Julia application Docker image
+        uses: chipkent/action-julia-docker@v1.0.0
+        with:
+          image-name: action-julia-docker-test
+          julia-version: 1.6
+          julia-org: chipkent
+          julia-package: GoogleSheets.jl
+          julia-branch: main
+          # ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - uses: chipkent/action-cleanup-package@v1.0.1
+        with:
+          package-name: action-julia-docker-test
+          tag: latest
+          github-token: ${{ secrets.CI_ACTION_TOKEN }}
