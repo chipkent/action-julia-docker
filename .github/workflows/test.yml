@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Test
     steps:
+      - uses: actions/checkout@v2
       - name: Get branch name
         id: branch-name
         uses: tj-actions/branch-names@v5
