@@ -2,13 +2,12 @@ ARG JULIA_VERSION
 
 FROM julia:${JULIA_VERSION}
 
-ARG PACKAGE
-ARG REPO=git@github.com:chipkent/${PACKAGE}.jl.git
-ARG BRANCH=main
+ARG REPO
+ARG BRANCH
+ARG ENTRYPOINT
 
 ENV JULIA_THREADS=1
-ENV JULIA_PACKAGE=${PACKAGE}
-ENV RUN_SCRIPT=docker_run.sh
+ENV RUN_SCRIPT=${ENTRYPOINT}
 
 ########################################################
 # Essential packages
@@ -35,9 +34,7 @@ RUN mkdir -m 700 /root/.ssh; \
 ########################################################
 
 RUN --mount=type=ssh \
-    mkdir -p /root/.julia/dev/ && \
-    git clone --branch=${BRANCH} ${REPO} /root/.julia/dev/${PACKAGE} && \
-    julia -e "using Pkg; Pkg.activate(\"/root/.julia/dev/${PACKAGE}\"); Pkg.instantiate(); using ${PACKAGE}"
+    julia -e "using Pkg; Pkg.develop(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); @eval using $(Symbol(package)); end;"
 
 ########################################################
 # Clean up
@@ -49,4 +46,4 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Download data
 ########################################################
 
-ENTRYPOINT "/root/.julia/dev/${JULIA_PACKAGE}/scripts/${RUN_SCRIPT}"
+ENTRYPOINT ${RUN_SCRIPT}

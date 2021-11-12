@@ -11,8 +11,10 @@ Create and publish a Docker image for a Julia application.
 | registry-password | Docker registry password | false | `${{ secrets.GITHUB_TOKEN }}` |
 | image-name | Docker image name | false | `${{ github.repository }}` |
 | julia-version | Julia version | true | |
+| julia-org | GitHub organization providing the Julia package | false | `${{ github.event.organization.name }}` |
 | julia-package | Julia package name | false | `${{ github.event.repository.name }}` |
 | julia-branch | Branch of the Julia package | false | main |
+| julia-run-script | Entrypoint script used to run the Julia package | false | scripts/docker_run.sh |
 | ssh-private-key | SSH private key used to check out Julia repositories | false | |
 
 ## Outputs
@@ -54,6 +56,7 @@ jobs:
         uses: chipkent/action-julia-docker@v1.0.0
         with:
           julia-version: 1.6
+          julia-org: ${{ github.event.organization.name }}
           julia-package: ${{ github.event.repository.name }}
           julia-branch: ${{ steps.branch-name.outputs.current_branch }}
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}

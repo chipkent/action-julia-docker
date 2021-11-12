@@ -32,6 +32,10 @@ inputs:
   julia-version:
     descripton: 'Julia version'
     requried: true
+  julia-org:
+    description: 'GitHub organization providing the Julia package'
+    required: false
+    default: ${{ github.event.organization.name }}
   julia-package:
     description: 'Julia package name'
     required: false
@@ -40,6 +44,10 @@ inputs:
     description: 'Branch of the Julia package'
     required: false
     default: main
+  julia-run-script:
+    description: 'Entrypoint script used to run the Julia package'
+    required: false
+    default: scripts/docker_run.sh
   ssh-private-key:
     description: 'SSH private key used to check out Julia repositories'
     required: false
@@ -104,6 +112,7 @@ runs:
         ssh: default
         build-args: |
           JULIA_VERSION=${{ inputs.julia-version }}
+          REPO="git@github.com:${{ inputs.julia-org }}/${{ steps.short-package.outputs.name }}.jl.git"
           BRANCH=${{ inputs.julia-branch }}
-          PACKAGE=${{ steps.short-package.outputs.name }}
+          ENTRYPOINT=/root/.julia/dev/${{ steps.short-package.outputs.name }}/${{ julia-run-script }}
 
