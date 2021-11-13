@@ -23,8 +23,7 @@ inputs:
     default: ${{ github.actor }}
   registry-password:
     description: 'Docker registry password'
-    required: false
-    default: ${{ secrets.GITHUB_TOKEN }}
+    required: true
   image-name:
     description: 'Docker image name'
     required: false
@@ -114,5 +113,5 @@ runs:
           JULIA_VERSION=${{ inputs.julia-version }}
           REPO="git@github.com:${{ inputs.julia-org }}/${{ steps.short-package.outputs.name }}.jl.git"
           BRANCH=${{ inputs.julia-branch }}
-          ENTRYPOINT=/root/.julia/dev/${{ steps.short-package.outputs.name }}/${{ julia-run-script }}
+          ENTRYPOINT=/root/.julia/dev/${{ steps.short-package.outputs.name }}/${{ inputs.julia-run-script }}
 

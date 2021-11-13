@@ -8,7 +8,7 @@ Create and publish a Docker image for a Julia application.
 | ---- | ----------- | -------- | ------- |
 | registry | Docker registry | false | ghcr.io |
 | registry-username | Docker registry username | false | `${{ github.actor }}` |
-| registry-password | Docker registry password | false | `${{ secrets.GITHUB_TOKEN }}` |
+| registry-password | Docker registry password | true | |
 | image-name | Docker image name | false | `${{ github.repository }}` |
 | julia-version | Julia version | true | |
 | julia-org | GitHub organization providing the Julia package | false | `${{ github.event.organization.name }}` |
@@ -55,6 +55,7 @@ jobs:
       - name: Build and publish Julia application Docker image
         uses: chipkent/action-julia-docker@v1.0.0
         with:
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
           julia-version: 1.6
           julia-org: ${{ github.event.organization.name }}
           julia-package: ${{ github.event.repository.name }}

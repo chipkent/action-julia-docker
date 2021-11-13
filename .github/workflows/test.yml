@@ -17,6 +17,7 @@ jobs:
         # uses: chipkent/action-julia-docker@${{ steps.branch-name.outputs.current_branch }}
         uses: ./.
         with:
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
           image-name: action-julia-docker-test
           julia-version: 1.6
           julia-org: chipkent
