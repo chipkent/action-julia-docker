@@ -108,7 +108,7 @@ runs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        ssh: default
+        # ssh: default
         build-args: |
           JULIA_VERSION=${{ inputs.julia-version }}
           REPO="git@github.com:${{ inputs.julia-org }}/${{ steps.short-package.outputs.name }}.jl.git"
