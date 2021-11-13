@@ -108,10 +108,10 @@ runs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        # ssh: default
+        # ssh: default. --- need to config
         build-args: |
           JULIA_VERSION=${{ inputs.julia-version }}
-          REPO="git@github.com:${{ inputs.julia-org }}/${{ steps.short-package.outputs.name }}.jl.git"
+          REPO=git@github.com:${{ inputs.julia-org }}/${{ steps.short-package.outputs.name }}.jl.git
           BRANCH=${{ inputs.julia-branch }}
           ENTRYPOINT=/root/.julia/dev/${{ steps.short-package.outputs.name }}/${{ inputs.julia-run-script }}
 
