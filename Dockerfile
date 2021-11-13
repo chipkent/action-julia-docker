@@ -34,7 +34,8 @@ RUN mkdir -m 700 /root/.ssh; \
 ########################################################
 
 RUN --mount=type=ssh \
-    julia -e "using Pkg; Pkg.develop(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); @eval using $(Symbol(package)); end;"
+    julia -e "using Pkg; Pkg.develop(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); end;"
+    # julia -e "using Pkg; Pkg.develop(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); @eval using $(Symbol(package)); end;"
 
 ########################################################
 # Clean up
