@@ -1,10 +1,6 @@
 using Pkg
 
 
-println("*******")
-println(ENV)
-println("*******")
-
 org = ENV["ORG"]
 project = ENV["PROJECT"]
 branch = ENV["BRANCH"]

@@ -107,5 +107,5 @@ runs:
           ORG=${{ inputs.julia-org }}
           PROJECT=${{ inputs.julia-project }}
           BRANCH=${{ inputs.julia-branch }}
-          RUN_SCRIPT=${{ inputs.julia-run-script }}
+          ENTRYPOINT=${{ inputs.julia-run-script }}
 
