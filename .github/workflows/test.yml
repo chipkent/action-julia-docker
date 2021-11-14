@@ -23,8 +23,3 @@ jobs:
           julia-package: GoogleSheets.jl
           julia-branch: main
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      # - uses: chipkent/action-cleanup-package@v1.0.1
-      #   with:
-      #     package-name: action-julia-docker-test
-      #     tag: latest
-      #     github-token: ${{ secrets.CI_ACTION_TOKEN }}
