@@ -2,7 +2,7 @@ using Pkg
 
 repo = ENV["REPO"]
 branch = ENV["BRANCH"]
-package = last(split(replace(repo,".jl" => ""), "/"))
+package = last(split(replace(repo,".jl" => "", ".git" => ""), "/"))
 
 println("REPO: $repo")
 println("BRANCH: $branch")
