@@ -64,18 +64,12 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Compute short package name
-      id: short-package
-      run: echo "::set-output name=name::$(echo ${{ inputs.julia-project }} | sed -e "s/.jl$//")"
-      shell: bash
-
     - name: Echo input variables
       run: |
         echo "REGISTRY=${{ inputs.registry }}"
         echo "REGISTRY_USERNAME=${{ inputs.registry-username }}"
         echo "IMAGE_NAME=${{ inputs.image-name }}"
         echo "PACKAGE=${{ inputs.julia-project }}"
-        echo "PACKAGE_SHORT=${{ steps.short-package.outputs.name }}"
         echo "BRANCH=${{ inputs.julia-branch }}"
         echo "JULIA_VERSION=${{ inputs.julia-version }}"
       shell: bash
@@ -113,5 +107,5 @@ runs:
           ORG=${{ inputs.julia-org }}
           PROJECT=${{ inputs.julia-project }}
           BRANCH=${{ inputs.julia-branch }}
-          ENTRYPOINT=/root/.julia/dev/${{ steps.short-package.outputs.name }}/${{ inputs.julia-run-script }}
+          RUN_SCRIPT=${{ inputs.julia-run-script }}
 
