@@ -15,7 +15,7 @@ Create and publish a Docker image for a Julia application.
 | julia-package | Julia package name | false | `${{ github.event.repository.name }}` |
 | julia-branch | Branch of the Julia package | false | main |
 | julia-run-script | Entrypoint script used to run the Julia package | false | scripts/docker_run.sh |
-| ssh-private-key | SSH private key used to check out Julia repositories | false | |
+| ssh-private-key | SSH private key used to check out Julia repositories | true | |
 
 ## Outputs
 
