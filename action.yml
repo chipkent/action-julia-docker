@@ -94,7 +94,7 @@ runs:
         images: ${{ inputs.registry }}/${{ inputs.image-name }}
 
     - name: SSH agent
-      if: ${{ inputs.ssh-private-key }}
+      # if: ${{ inputs.ssh-private-key }}
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ inputs.ssh-private-key }}
@@ -108,7 +108,7 @@ runs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        # ssh: default. --- need to config
+        ssh: default
         build-args: |
           JULIA_VERSION=${{ inputs.julia-version }}
           REPO=git@github.com:${{ inputs.julia-org }}/${{ steps.short-package.outputs.name }}.jl.git
