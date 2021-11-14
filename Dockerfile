@@ -38,7 +38,8 @@ RUN --mount=type=ssh \
     # julia -e "using Pkg; Pkg.develop(\"${REPO}@${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); end;"
     # julia -e "using Pkg; Pkg.develop(url=\"${REPO}\")"
     # julia -e "using Pkg; Pkg.develop(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); @eval using $(Symbol(package)); end;"
-    julia -e "using Pkg; Pkg.add(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); @eval using $(Symbol(package)); end;"
+    # julia -e "using Pkg; Pkg.add(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); @eval using $(Symbol(package)); end;"
+    julia -e "using Pkg; Pkg.add(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\"))"
 
 ########################################################
 # Clean up
