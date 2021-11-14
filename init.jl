@@ -1,12 +1,18 @@
 using Pkg
 
-repo = ENV["REPO"]
+org = ENV["ORG"]
+project = ENV["PROJECT"]
 branch = ENV["BRANCH"]
-package = last(split(replace(replace(repo,".jl" => ""), ".git" => ""), "/"))
 
 println("REPO: $repo")
 println("BRANCH: $branch")
+println("ORG: $org")
+
+package = replace(repo, ".jl" => "")
 println("PACKAGE: $package")
+
+repo="git@github.com:$org/$project.git"
+println("REPO: $repo")
 
 mkpath("/root/.julia/dev/")
 run(`git clone --branch=$branch $repo /root/.julia/dev/$package`)

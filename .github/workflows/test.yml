@@ -20,6 +20,6 @@ jobs:
           image-name: chipkent/action-julia-docker-test
           julia-version: 1.6
           julia-org: chipkent
-          julia-package: GoogleSheets.jl
+          julia-project: GoogleSheets.jl
           julia-branch: main
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
