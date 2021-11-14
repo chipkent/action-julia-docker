@@ -11,7 +11,7 @@ println("PROJECT: $project")
 println("BRANCH: $branch")
 println("RUN_SCRIPT: $run_script")
 
-package = replace(repo, ".jl" => "")
+package = replace(project, ".jl" => "")
 println("PACKAGE: $package")
 
 repo="git@github.com:$org/$project.git"
