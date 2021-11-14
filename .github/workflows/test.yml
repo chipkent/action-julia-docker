@@ -17,7 +17,7 @@ jobs:
         uses: ./.
         with:
           registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image-name: action-julia-docker-test
+          image-name: chipkent/action-julia-docker-test
           julia-version: 1.6
           julia-org: chipkent
           julia-package: GoogleSheets.jl

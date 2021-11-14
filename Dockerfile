@@ -42,7 +42,7 @@ RUN --mount=type=ssh \
     # julia -e "using Pkg; Pkg.develop(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); @eval using $(Symbol(package)); end;"
     # julia -e "using Pkg; Pkg.add(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\")); for package in readdir(\"/root/.julia/dev/\"); Pkg.activate(\"/root/.julia/dev/$package\"); Pkg.instantiate(); @eval using $(Symbol(package)); end;"
     # julia -e "using Pkg; Pkg.add(Pkg.PackageSpec(url=\"${REPO}\", rev=\"${BRANCH}\"))"
-    julia /init.jl
+    julia /init.jl && rm /init.jl
 
 ########################################################
 # Clean up
