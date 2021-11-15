@@ -17,8 +17,12 @@ println("PACKAGE: $package")
 repo="git@github.com:$org/$project.git"
 println("REPO: $repo")
 
+println("Git checkout")
 mkpath("/root/.julia/dev/")
 run(`git clone --branch=$branch $repo /root/.julia/dev/$package`)
+
+println("Creating symlink: ", "/root/.julia/dev/$package/$run_script", "/run.sh")
+symlink("/root/.julia/dev/$package/$run_script", "/run.sh")
 
 println("Activating package: $package")
 Pkg.activate("/root/.julia/dev/$package")
@@ -26,5 +30,3 @@ println("Instantiating package: $package")
 Pkg.instantiate()
 println("Using package: $package")
 @eval using $(Symbol(package))
-
-symlink("/root/.julia/dev/$package/$run_script", "/run.sh")
