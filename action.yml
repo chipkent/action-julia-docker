@@ -1,0 +1,111 @@
+# Build the Docker image and publish it to the GitHub Container Registry
+#
+# See: https://github.com/marketplace/actions/branch-names
+# See: https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
+# See: https://github.com/marketplace/actions/docker-login
+# See: https://github.com/marketplace/actions/docker-metadata-action
+# See: https://github.com/marketplace/actions/build-and-push-docker-images
+# See: https://github.com/marketplace/actions/webfactory-ssh-agent
+# See: https://medium.com/@tonistiigi/build-secrets-and-ssh-forwarding-in-docker-18-09-ae8161d066
+# See: https://docs.docker.com/develop/develop-images/build_enhancements/
+# See: https://github.com/docker/build-push-action/blob/master/docs/advanced/secrets.md
+
+name: 'action-julia-docker'
+description: 'Build a Docker image for a Julia application'
+inputs:
+  registry:
+    description: 'Docker registry'
+    required: false
+    default: ghcr.io
+  registry-username:
+    description: 'Docker registry username'
+    required: false
+    default: ${{ github.actor }}
+  registry-password:
+    description: 'Docker registry password'
+    required: true
+  image-name:
+    description: 'Docker image name'
+    required: false
+    default: ${{ github.repository }}
+  julia-version:
+    descripton: 'Julia version'
+    requried: true
+  julia-org:
+    description: 'GitHub organization providing the Julia package'
+    required: false
+    default: ${{ github.event.organization.name }}
+  julia-project:
+    description: 'Julia package name'
+    required: false
+    default: ${{ github.event.repository.name }}
+  julia-branch:
+    description: 'Branch of the Julia package'
+    required: false
+    default: main
+  julia-run-script:
+    description: 'Entrypoint script used to run the Julia package'
+    required: false
+    default: scripts/docker_run.sh
+  ssh-private-key:
+    description: 'SSH private key used to check out Julia repositories'
+    required: true
+outputs:
+  image-full-name:
+    description: 'Full name of the Docker image with registry prefix (registry/owner/image)'
+    value: ${{ steps.docker.outputs.imageFullName }}
+  image-name:
+    description: 'Name of the Docker image with owner prefix (owner/image)'
+    value: ${{ steps.docker.outputs.imageName }}
+  tags:
+    description: 'Tags for the Docker image (v1,latest)'
+    value: ${{ steps.docker.outputs.tags }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Echo input variables
+      run: |
+        echo "REGISTRY=${{ inputs.registry }}"
+        echo "REGISTRY_USERNAME=${{ inputs.registry-username }}"
+        echo "IMAGE_NAME=${{ inputs.image-name }}"
+        echo "PACKAGE=${{ inputs.julia-project }}"
+        echo "BRANCH=${{ inputs.julia-branch }}"
+        echo "JULIA_VERSION=${{ inputs.julia-version }}"
+      shell: bash
+
+    - name: Log in to the Container registry
+      uses: docker/login-action@v1.10.0
+      with:
+        registry: ${{ inputs.registry }}
+        username: ${{ inputs.registry-username }}
+        password: ${{ inputs.registry-password }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v3.5.0
+      with:
+        images: ${{ inputs.registry }}/${{ inputs.image-name }}
+
+    - name: SSH agent      
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ inputs.ssh-private-key }}
+
+    - name: Build and push Docker image
+      id: docker
+      uses: docker/build-push-action@v2.7.0
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        ssh: default
+        build-args: |
+          JULIA_VERSION=${{ inputs.julia-version }}
+          ORG=${{ inputs.julia-org }}
+          PROJECT=${{ inputs.julia-project }}
+          BRANCH=${{ inputs.julia-branch }}
+          ENTRYPOINT=${{ inputs.julia-run-script }}
+

@@ -1,0 +1,25 @@
+# Test the action to see if it works
+
+name: Test action
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v5
+      - name: Build and publish Julia application Docker image
+        uses: ./.
+        with:
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-name: chipkent/action-julia-docker-test
+          julia-version: 1.6
+          julia-org: chipkent
+          julia-project: GoogleSheets.jl
+          julia-branch: main
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
