@@ -34,7 +34,7 @@ inputs:
   julia-org:
     description: 'GitHub organization providing the Julia package'
     required: false
-    default: ${{ github.event.organization.name }}
+    default: ${{ github.actor }}
   julia-project:
     description: 'Julia package name'
     required: false
