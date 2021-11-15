@@ -53,7 +53,7 @@ jobs:
         uses: tj-actions/branch-names@v5
 
       - name: Build and publish Julia application Docker image
-        uses: chipkent/action-julia-docker@v1.0.0
+        uses: chipkent/action-julia-docker@v1.0.1
         with:
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           julia-version: 1.6
