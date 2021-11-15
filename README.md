@@ -11,7 +11,7 @@ Create and publish a Docker image for a Julia application.
 | registry-password | Docker registry password | true | |
 | image-name | Docker image name | false | `${{ github.repository }}` |
 | julia-version | Julia version | true | |
-| julia-org | GitHub organization providing the Julia package | false | `${{ github.event.organization.name }}` |
+| julia-org | GitHub organization providing the Julia package | false | `${{ github.actor }}` |
 | julia-project | Julia package name | false | `${{ github.event.repository.name }}` |
 | julia-branch | Branch of the Julia package | false | main |
 | julia-run-script | Entrypoint script used to run the Julia package | false | scripts/docker_run.sh |
@@ -57,7 +57,7 @@ jobs:
         with:
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           julia-version: 1.6
-          julia-org: ${{ github.event.organization.name }}
+          julia-org: ${{ github.actor }}
           julia-project: ${{ github.event.repository.name }}
           julia-branch: ${{ steps.branch-name.outputs.current_branch }}
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
