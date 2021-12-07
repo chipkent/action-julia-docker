@@ -46,7 +46,7 @@ inputs:
   julia-run-script:
     description: 'Entrypoint script used to run the Julia package'
     required: false
-    default: /run.sh
+    default: scripts/docker_run.sh
   ssh-private-key:
     description: 'SSH private key used to check out Julia repositories'
     required: true
@@ -108,4 +108,3 @@ runs:
           PROJECT=${{ inputs.julia-project }}
           BRANCH=${{ inputs.julia-branch }}
           ENTRYPOINT=${{ inputs.julia-run-script }}
-

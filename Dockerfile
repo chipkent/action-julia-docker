@@ -8,7 +8,6 @@ ARG BRANCH
 ARG ENTRYPOINT
 
 ENV JULIA_THREADS=1
-ENV RUN_SCRIPT=${ENTRYPOINT}
 
 COPY ./init.jl /
 
@@ -48,4 +47,4 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Download data
 ########################################################
 
-ENTRYPOINT ${RUN_SCRIPT}
+ENTRYPOINT /run.sh
