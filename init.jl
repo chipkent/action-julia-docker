@@ -17,6 +17,9 @@ println("PACKAGE: $package")
 repo="git@github.com:$org/$project.git"
 println("REPO: $repo")
 
+println("Setup TimeZones")
+Pkg.build("TimeZones")
+
 println("Git checkout")
 mkpath("/root/.julia/dev/")
 run(`git clone --branch=$branch $repo /root/.julia/dev/$package`)
