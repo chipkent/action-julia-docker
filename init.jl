@@ -18,6 +18,7 @@ repo="git@github.com:$org/$project.git"
 println("REPO: $repo")
 
 println("Setup TimeZones")
+Pkg.add("TimeZones")
 Pkg.build("TimeZones")
 
 println("Git checkout")
