@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.5.3
       - name: Get branch name
         id: branch-name
-        uses: tj-actions/branch-names@v5
+        uses: tj-actions/branch-names@v7.0.2
       - name: Build and publish Julia application Docker image
         uses: ./.
         with:
