@@ -48,7 +48,7 @@ RUN --mount=type=ssh \
     echo "SSH Configs (/root/.ssh)" && \
     ls -al /root/.ssh && \
     echo "SSH GitHub Connection Check" && \
-    ssh -T git@github.com
+    ssh -T git@github.com || true
 
 ########################################################
 # Julia
