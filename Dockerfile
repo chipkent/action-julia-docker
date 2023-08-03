@@ -27,7 +27,7 @@ RUN apt-get install -y bzip2 wget gnupg dirmngr apt-transport-https \
 ########################################################
 
 # Download public key for github.com
-RUN mkdir -m 700 /root/.ssh; \
+RUN mkdir -p -m 700 /root/.ssh; \
     touch -m 600 /root/.ssh/known_hosts; \
     ssh-keyscan github.com > /root/.ssh/known_hosts
 
