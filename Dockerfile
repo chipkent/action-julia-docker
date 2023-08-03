@@ -42,7 +42,7 @@ RUN --mount=type=ssh \
     echo "SSH Agent Keys (Verbose)"; \
     ssh-add -L; \
     echo "SSH Configs"; \
-    ls -al ~/.ssh
+    ls -al ~/.ssh; \
     echo "SSH GitHub Connection Check"; \
     ssh -T git@github.com
 
