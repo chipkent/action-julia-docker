@@ -36,7 +36,15 @@ RUN mkdir -m 700 /root/.ssh; \
 # Ssh Test
 ########################################################
 
-RUN --mount=type=ssh ssh -T git@github.com
+RUN --mount=type=ssh \
+    echo "SSH Agent Keys"; \
+    ssh-add -l; \
+    echo "SSH Agent Keys (Verbose)"; \
+    ssh-add -L; \
+    echo "SSH Configs"; \
+    ls -al ~/.ssh
+    echo "SSH GitHub Connection Check"; \
+    ssh -T git@github.com
 
 ########################################################
 # Julia
