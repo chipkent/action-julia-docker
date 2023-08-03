@@ -37,11 +37,13 @@ RUN mkdir -m 700 /root/.ssh; \
 ########################################################
 
 RUN --mount=type=ssh \
+    echo "WhoAmI"; \
+    whoami; \
     echo "SSH Agent Keys"; \
     ssh-add -l; \
     echo "SSH Agent Keys (Verbose)"; \
     ssh-add -L; \
-    echo "SSH Configs"; \
+    echo "SSH Configs (~/.ssh)"; \
     ls -al ~/.ssh; \
     echo "SSH GitHub Connection Check"; \
     ssh -T git@github.com
